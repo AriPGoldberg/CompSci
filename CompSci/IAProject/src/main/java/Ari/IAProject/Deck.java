@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L; // Variable used for serialization
     private String name;
     private List<MagicCard> cards;
 
@@ -21,6 +21,7 @@ public class Deck implements Serializable {
                 System.out.println("Deck file already exists: " + filename);
             }
         } catch (IOException e) {
+            // Stack tracing / error handling
             System.out.println("An error occurred while creating the deck file: " + e.getMessage());
             e.printStackTrace();
         }

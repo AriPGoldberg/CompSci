@@ -31,6 +31,7 @@ public class RemoveFromFile {
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + filename);
         } catch (IOException | ClassNotFoundException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
         return new ArrayList<>();
@@ -42,6 +43,7 @@ public class RemoveFromFile {
             out.writeObject(cards);
             System.out.println("Serialized data is saved in " + filename);
         } catch (IOException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
     }

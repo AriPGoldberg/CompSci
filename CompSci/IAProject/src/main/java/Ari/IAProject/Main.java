@@ -28,7 +28,8 @@ import static Ari.IAProject.DeserializeCards.deserialize;
 
 public class Main {
 
-    private static final String API_BASE_URL = "https://api.scryfall.com/";
+
+    private static final String API_BASE_URL = "https://api.scryfall.com/";  // String to hold API link
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -70,6 +71,7 @@ public class Main {
     }
 
     private static void addCards(Scanner scanner) {
+        // Function to add cards to the serialization file
         HttpClient httpClient = HttpClients.createDefault();
 
         SerializeCards serializeCards = new SerializeCards();
@@ -109,6 +111,7 @@ public class Main {
                 System.out.println("No cards found for the search term: " + searchTerm);
             }
         } catch (IOException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
 
@@ -118,12 +121,13 @@ public class Main {
     }
 
     public static void createDeck(String deckName) {
+        // Function to create a new deck
         Deck deck = new Deck(deckName);
         System.out.println("Deck created with name: " + deck.getName());
     }
 
     public static void addCardToDeck(Scanner scanner) {
-
+        // Function to add a card to a deck
         MagicCard foundCard = searchForCard(scanner, true);
         if (foundCard != null) {
             Deck deck = loadOrCreateExistingDeck(scanner);
@@ -140,6 +144,7 @@ public class Main {
     }
 
     public static MagicCard searchForCard(Scanner scanner, Boolean exact) {
+        // Searches the API for a card and displays it
         HttpClient httpClient = HttpClients.createDefault();
         MagicCard magicCard = null;
 
@@ -172,6 +177,7 @@ public class Main {
                 System.out.println("No cards found for the search term: " + searchTerm);
             }
         } catch (IOException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
 
@@ -187,6 +193,7 @@ public class Main {
     }
 
     public static Deck loadOrCreateExistingDeck(Scanner scanner) {
+        // Creates or loads and existing deck
         System.out.println("Do you want to create a new deck or load an existing one? (new/load)");
         String choice = scanner.nextLine();
         if (choice.equalsIgnoreCase("new")) {
@@ -210,6 +217,7 @@ public class Main {
 
 
     public static Deck loadDeckFromStorage(String deckName) {
+        // Loads the .ser file associated with a deck
         String filename = deckName + ".ser";
         try (FileInputStream fileIn = new FileInputStream(filename);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
@@ -221,6 +229,7 @@ public class Main {
     }
 
     public static void printDeck(Scanner scanner) {
+        // Lists off all the cards in a deck
         System.out.println("What is the name of the deck you would like to list?");
         String deckName = scanner.nextLine();
         Deck deck = Deck.deserialize(deckName);
@@ -243,6 +252,7 @@ public class Main {
     }
 
     public static void deleteDeck(Scanner scanner){
+        // Deletes a deck and it's .ser file
         System.out.println("What is the name of the deck you want to delete?");
         String deckName = scanner.nextLine() + ".ser";
         File file = new File(deckName);
@@ -261,6 +271,7 @@ public class Main {
 
 
     public static void listAllCards() {
+        // Prints off all the cards in the cards serialization file (cards.ser), not the decks
         String filename = "cards.ser";
         File file = new File(filename);
         if (file.exists()) {
@@ -282,6 +293,7 @@ public class Main {
     }
 
     private static void displayCards(List<MagicCard> cards) {
+        // Function used to display the cards
         JFrame frame = new JFrame("Magic Cards");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -297,6 +309,7 @@ public class Main {
     }
 
     private static void displayCard(MagicCard card) {
+        // Function used to display the cards
         JFrame frame = new JFrame("Magic Cards");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -312,6 +325,7 @@ public class Main {
 
 
     private static void displayCardImage(JPanel panel, String imageUrl) {
+        // Function used to display the cards
         try {
             URL url = new URL(imageUrl);
             Image image = ImageIO.read(url);
@@ -319,12 +333,14 @@ public class Main {
             label.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
             panel.add(label);
         } catch (IOException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
     }
 
 
     private static String extractName(JsonObject cardObject) {
+        // Function to get the name of a card from its JsonObject and return it as a String
         if (cardObject.has("name") && !cardObject.get("name").isJsonNull()) {
             return cardObject.get("name").getAsString();
         } else {
@@ -333,6 +349,7 @@ public class Main {
     }
 
     private static String extractPrice(JsonObject cardObject) {
+        // Function to get the price of a card from its JsonObject and return it as a String
         if (cardObject.has("prices") && !cardObject.get("prices").isJsonNull()) {
             JsonObject pricesObject = cardObject.getAsJsonObject("prices");
             if (pricesObject.has("usd") && !pricesObject.get("usd").isJsonNull()) {
@@ -346,6 +363,7 @@ public class Main {
     }
 
     private static String extractImageUrl(JsonObject cardObject) {
+        // Function to get the ImageUrl of a card from its JsonObject and return it as a String
         if (cardObject.has("image_uris") && !cardObject.get("image_uris").isJsonNull()) {
             JsonObject imageUrisObject = cardObject.getAsJsonObject("image_uris");
             if (imageUrisObject.has("normal") && !imageUrisObject.get("normal").isJsonNull()) {

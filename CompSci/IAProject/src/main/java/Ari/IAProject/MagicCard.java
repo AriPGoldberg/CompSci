@@ -3,7 +3,7 @@ package Ari.IAProject;
 import java.io.Serializable;
 
 public class MagicCard implements Serializable {
-    private static final long serialVersionUID = 5852912073948438763L;
+    private static final long serialVersionUID = 5852912073948438763L; // Variable used for serialization
     private String name;
     private String price;
     private String imageUrl;
@@ -15,6 +15,8 @@ public class MagicCard implements Serializable {
         this.price = price;
         this.imageUrl = imageUrl;
     }
+
+    // Setters and getters + toString
 
     public String getName() {
         return name;

@@ -10,6 +10,7 @@ import static Ari.IAProject.DeserializeCards.deserialize;
 public class SerializeCards {
 
     public static void serialize(List<MagicCard> cards, String filename) {
+        // Serializes cards into a .ser file
         List<MagicCard> existingCards = deserialize(filename);
         if (existingCards != null) {
             existingCards.addAll(cards);
@@ -18,6 +19,7 @@ public class SerializeCards {
                 out.writeObject(existingCards);
                 System.out.println("Serialized " + cards.size() + " cards to " + filename);
             } catch (IOException e) {
+                // Stack tracing / error handling
                 e.printStackTrace();
             }
         } else {
@@ -26,6 +28,7 @@ public class SerializeCards {
                 out.writeObject(cards);
                 System.out.println("Serialized " + cards.size() + " cards to " + filename);
             } catch (IOException e) {
+                // Stack tracing / error handling
                 e.printStackTrace();
             }
         }

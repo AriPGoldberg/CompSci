@@ -21,12 +21,14 @@ public class DeserializeCards {
     }
 
     public static List<MagicCard> deserialize(String filename) {
+        // Deserializes cards and puts them into an ArrayList for easier usage
         List<MagicCard> deserializedCards = new ArrayList<>();
         try (FileInputStream fileIn = new FileInputStream(filename);
              ObjectInputStream in = new ObjectInputStream(fileIn)) {
             List<MagicCard> existingCards = (List<MagicCard>) in.readObject();
             deserializedCards.addAll(existingCards);
         } catch (IOException | ClassNotFoundException e) {
+            // Stack tracing / error handling
             e.printStackTrace();
         }
         return deserializedCards;
